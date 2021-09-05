@@ -1,0 +1,10 @@
+{% extends "main/base.html" %}
+{% block title %}View List{% endblock %}
+
+{% block content %}
+<select name="list" id="list">
+    {% for item in ls.all %}
+        <option value={{item}}>{{item}}</option>
+    {% endfor %}
+</select>
+{% endblock %}
