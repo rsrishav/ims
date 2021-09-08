@@ -3,20 +3,22 @@ from django.http import HttpResponse
 from .models import ToDoList, Item
 from .forms import CreateNewItem
 from django.contrib.auth.decorators import login_required
+from main.constants import *
 
 
-# Create your views here.
+@login_required(login_url=URL_LOGIN)
 def index(response):
     # ls = ToDoList.objects.get(id=id)
     ls = ToDoList.objects.all()
-    return render(response, "main/list.html", {"ls": ls})
+    return render(response, TMP_LIST, {"ls": ls})
 
 
-@login_required(login_url='/login/')
+@login_required(login_url=URL_LOGIN)
 def home(response):
-    return render(response, "main/home.html", {})
+    return render(response, TMP_HOME, {})
 
 
+@login_required(login_url=URL_LOGIN)
 def createRecord(response):
     if response.method == "POST":
         form = CreateNewItem(response.POST)
@@ -24,7 +26,7 @@ def createRecord(response):
             name = form.cleaned_data["name"]
             t = ToDoList(name=name)
             t.save()
-            return redirect("/list")
+            return redirect(URL_LIST)
     else:
         form = CreateNewItem()
-        return render(response, "main/create.html", {"form": form})
+        return render(response, TMP_CREATE, {"form": form})
