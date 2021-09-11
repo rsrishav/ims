@@ -1,17 +1,21 @@
 <!doctype html>
+{% load static %}
 <html>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap4.3.1.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap5.0.2.min.css' %}">
+    <script src="{% static 'main/js/bootstrap5.0.2.bundle.min.js' %}"></script>
+    <script src="{% static 'main/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'main/js/popper.min.js' %}"></script>
+    <script src="{% static 'main/js/bootstrap4.3.1.min.js' %}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/images/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+
     <title>{% block title %}IMS{% endblock %}</title>
 </head>
 
@@ -24,15 +28,34 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav me-auto">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                <a class="nav-link" href="/create">Create</a>
-                <a class="nav-link" href="/list">View</a>
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">TODO3</a>
-            </div>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="records"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</a>
+                    <ul class="dropdown-menu" aria-labelledby="records">
+<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
+                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                                                        href="/products">Products</a>
+                            <ul class="dropdown-menu">
+                                <a class="dropdown-item" href="/products/add">Add New Product</a>
+                                <a class="dropdown-item" href="#">Manage Products</a>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+<!--                <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">-->
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Monitoring</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Tools</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="#">Help</a>
+                </li>
+            </ul>
             <div class="d-flex">
                 <a href="/logout" class="btn btn-dark btn-outline-light">Logout</a>
-<!--                <button class="btn btn-dark btn-outline-light" id="logout_btn">Logout</button>-->
             </div>
         </div>
     </div>
@@ -43,21 +66,7 @@
         {% endblock %}
     </div>
 </main>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-
-
 <script>
-
 </script>
 </body>
 </html>

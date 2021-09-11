@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
+from main.constants import *
 
 
 def register(response):
@@ -7,7 +8,7 @@ def register(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-            return redirect("/login")
+            return redirect(URL_LOGIN)
     else:
         form = RegisterForm()
-    return render(response, "register/register.html", {"form": form})
+    return render(response, TMP_REGISTER, {"form": form})

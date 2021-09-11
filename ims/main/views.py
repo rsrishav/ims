@@ -10,12 +10,12 @@ from main.constants import *
 def index(response):
     # ls = ToDoList.objects.get(id=id)
     ls = ToDoList.objects.all()
-    return render(response, TMP_LIST, {"ls": ls})
+    return render(response, TMP_MAIN_LIST, {"ls": ls})
 
 
 @login_required(login_url=URL_LOGIN)
 def home(response):
-    return render(response, TMP_HOME, {})
+    return render(response, TMP_MAIN_HOME, {})
 
 
 @login_required(login_url=URL_LOGIN)
@@ -29,4 +29,4 @@ def createRecord(response):
             return redirect(URL_LIST)
     else:
         form = CreateNewItem()
-        return render(response, TMP_CREATE, {"form": form})
+        return render(response, TMP_MAIN_CREATE, {"form": form})
