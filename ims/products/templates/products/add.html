@@ -1,0 +1,195 @@
+{% extends "main/base.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+<!--<h3>Add New Product</h3>-->
+<style>
+  span {
+    width: 110px;
+    color: #001829 !important;
+    background-color: aliceblue !important;
+  }
+  #collapseTwo span {
+    width: 150px;
+  }
+
+</style>
+<form method="post">
+  <div class="row g-3">
+    <div class="col-md">
+      <div class="accordion" id="accordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+              General
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+               data-bs-parent="#accordion">
+            <div class="accordion-body">
+              <div class="row" style="margin-bottom: -0.5rem;">
+                <div class="col-md">
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="lbl_active">Active</span>
+                    <div class="input-group-text" style="width: 37px;">
+                      <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Active"
+                             style="margin-left: -2px;" id="active">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_code">Code</span>
+                    <input type="text" class="form-control" placeholder="Code" aria-label="Code"
+                           aria-describedby="lbl_code" readonly id="code">
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_product_id">Product ID</span>
+                <input type="text" class="form-control" placeholder="Product ID" aria-label="Product ID"
+                       aria-describedby="lbl_product_id" readonly id="product_id">
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_category">Category</span>
+                <input type="text" class="form-control" placeholder="Category" aria-label="Category"
+                       aria-describedby="lbl_category" id="category">
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_article">Article</span>
+                <input type="text" class="form-control" placeholder="Article" aria-label="Article"
+                       aria-describedby="lbl_article" id="article">
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_hsn_code">HSN Code</span>
+                <input type="text" class="form-control" placeholder="HSN Code" aria-label="HSN Code"
+                       aria-describedby="lbl_hsn_code" id="hsn_code">
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_description">Description</span>
+                <textarea class="form-control" placeholder="Description" aria-label="Description"
+                          aria-describedby="lbl_description" id="description"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Product Price Setup
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+               data-bs-parent="#accordion">
+            <div class="accordion-body">
+              <div class="row" style="margin-bottom: -0.5rem;">
+                <div class="col-auto">
+                  <div class="input-group mb-3 radio_btn">
+                    <div class="input-group-text" style="width: 37px;">
+                      <input class="form-check-input mt-0" type="radio" value="" name="type" checked aria-label="Active"
+                             style="margin-left: -2px;" id="one_time">
+                    </div>
+                    <span class="input-group-text" id="lbl_one_time">One Time Product</span>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="input-group mb-3 radio_btn">
+                    <div class="input-group-text" style="width: 37px;">
+                      <input class="form-check-input mt-0" type="radio" value="" name="type" aria-label="Active"
+                             style="margin-left: -2px;" id="multi_line">
+                    </div>
+                    <span class="input-group-text" id="lbl_multi_line">Multi Line Product</span>
+                  </div>
+                </div>
+              </div>
+              <div class="input-group mb-2">
+                <span class="input-group-text" id="lbl_bar_code">UAC Bar Code</span>
+                <input type="text" class="form-control" placeholder="UAC Bar Code" aria-label="UAC Bar Code"
+                       aria-describedby="lbl_code" readonly id="bar_code">
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_sup_price">Supplier Price</span>
+                    <input type="number" class="form-control" placeholder="0" aria-label="Supplier Price" step="0.1"
+                           aria-describedby="lbl_sup_price" id="sup_price">
+                  </div>
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_cust_price">Price to Customer</span>
+                    <input type="number" class="form-control" placeholder="0" aria-label="Price to Customer" step="0.1"
+                           aria-describedby="lbl_cust_price" id="cust_price">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_disc_per">Discount</span>
+                    <input type="number" class="form-control" placeholder="0"
+                           aria-label="Discount" step="0.01"
+                           aria-describedby="lbl_disc_per" id="disc_per">
+                    <span class="input-group-text" style="width: auto;">%</span>
+                  </div>
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_disc_amount">Discount Amount</span>
+                    <input type="number" class="form-control" placeholder="0" aria-label="Discount Amount" step="0.1"
+                           aria-describedby="lbl_disc_amount" id="disc_amount">
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_color">Color</span>
+                    <input type="text" class="form-control" placeholder="Color" aria-label="Color"
+                           aria-describedby="lbl_color" id="color">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_style">Style</span>
+                    <input type="text" class="form-control" placeholder="Style" aria-label="Style"
+                           aria-describedby="lbl_style" id="style">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_ex_date">Ex Date</span>
+                    <input type="date" class="form-control" aria-label="Ex Date" aria-describedby="lbl_ex_date"
+                           id="ex_date">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group mb-2">
+                    <span class="input-group-text" id="lbl_qty">Total Qty Add</span>
+                    <input type="number" class="form-control" aria-label="Ex Date" aria-describedby="lbl_qty" readonly
+                           id="qty">
+                  </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-primary" type="button" style="width: inherit;">Add Product in List</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md"></div>
+  </div>
+</form>
+
+<script>
+
+  document.getElementById('ex_date').valueAsDate = new Date();
+
+  $('.radio_btn').click(function() {
+    $(this).find('input').prop('checked', true)
+  });
+
+</script>
+{% endblock %}
