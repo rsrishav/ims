@@ -2,69 +2,69 @@
 {% load static %}
 <html>
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'main/css/bootstrap4.3.1.min.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/bootstrap5.0.2.min.css' %}">
-    <script src="{% static 'main/js/bootstrap5.0.2.bundle.min.js' %}"></script>
-    <script src="{% static 'main/js/jquery-3.3.1.slim.min.js' %}"></script>
-    <script src="{% static 'main/js/popper.min.js' %}"></script>
-    <script src="{% static 'main/js/bootstrap4.3.1.min.js' %}"></script>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{% static 'main/css/bootstrap4.3.1.min.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/bootstrap5.0.2.min.css' %}">
+  <script src="{% static 'main/js/bootstrap5.0.2.bundle.min.js' %}"></script>
+  <script src="{% static 'main/js/jquery-3.3.1.slim.min.js' %}"></script>
+  <script src="{% static 'main/js/popper.min.js' %}"></script>
+  <script src="{% static 'main/js/bootstrap4.3.1.min.js' %}"></script>
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'main/images/favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'main/images/favicon.ico' %}"/>
+  <link rel="stylesheet" href="{% static 'main/css/base.css' %}">
 
-    <title>{% block title %}IMS{% endblock %}</title>
+  <title>{% block title %}IMS{% endblock %}</title>
 </head>
 
 <body>
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Invoice Management System</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="records"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</a>
-                    <ul class="dropdown-menu" aria-labelledby="records">
-<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-                                                        href="/products">Products</a>
-                            <ul class="dropdown-menu">
-                                <a class="dropdown-item" href="/products/add">Add New Product</a>
-                                <a class="dropdown-item" href="#">Manage Products</a>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-<!--                <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">-->
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Monitoring</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Tools</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Help</a>
-                </li>
-            </ul>
-            <div class="d-flex">
-                <a href="/logout" class="btn btn-dark btn-outline-light">Logout</a>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Invoice Management System</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="records"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Records</a>
+          <ul class="dropdown-menu" aria-labelledby="records">
+            <!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
+            <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                                            href="/products">Products</a>
+              <ul class="dropdown-menu">
+                <a class="dropdown-item" href="/products/add">Add New Product</a>
+                <a class="dropdown-item" href="#">Manage Products</a>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <!--                <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">-->
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#">Monitoring</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#">Tools</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="#">Help</a>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <a href="/logout" class="btn btn-dark btn-outline-light">Logout</a>
+      </div>
     </div>
+  </div>
 </nav>
-<main class="container" style="margin-top: 60px;margin-left: 1%;">
-    <div>
-        {% block content %}
-        {% endblock %}
-    </div>
+<main class="container-fluid" style="margin-top: 60px;padding: 0% 2%;">
+  <div>
+    {% block content %}
+    {% endblock %}
+  </div>
 </main>
 <script>
 </script>
