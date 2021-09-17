@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'main.apps.MainConfig',
     'register.apps.RegisterConfig',
-    'products.apps.ProductsConfig'
+    'products.apps.ProductsConfig',
+    'masters.apps.MastersConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,7 @@ STATICFILES_DIRS = [
     BASE_DIR.parent / "main/static",
     BASE_DIR.parent / "register/static",
     BASE_DIR.parent / "products/static",
+    BASE_DIR.parent / "masters/static",
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
