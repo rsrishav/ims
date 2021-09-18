@@ -1,0 +1,33 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>IMS: Sign Up</title>
+    <link rel="stylesheet" href="{% static 'main/css/fonts.googleapis.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap4.3.1.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/font-awesome.min.css' %}">
+    <script src="{% static 'main/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'main/js/popper.min.js' %}"></script>
+    <script src="{% static 'main/js/bootstrap4.3.1.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'register/css/register.css' %}">
+
+</head>
+<body data-new-gr-c-s-check-loaded="14.1028.0" data-gr-ext-installed="">
+{% load crispy_forms_tags %}
+<div class="signup-form">
+    <form method="post">
+        {% csrf_token %}
+        <h2>Sign Up</h2>
+        <p>Please fill in this form to create an account!</p>
+        <hr>
+        {{ form|crispy }}
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+        </div>
+    </form>
+    <div class="hint-text small">Already have an account? <a href="{% url 'login' %}">Login here</a></div>
+</div>
+
+</body>
+</html>
