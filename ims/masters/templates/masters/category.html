@@ -4,6 +4,7 @@
     color: #001829 !important;
     background-color: aliceblue !important;
   }
+
 </style>
 <div class="modal fade" id="category_modal" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
   <div class="modal-dialog">
@@ -34,7 +35,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" id="btn_save_category">Save changes</button>
+          <button class="btn btn-primary" id="btn_save_category">Save changes</button>
         </div>
       </form>
     </div>
@@ -42,26 +43,31 @@
 </div>
 
 <script>
-  $('#btn_save_category').click(function(){
+  $('#btn_save_category').click(function(event){
     var form = $(this).closest("form");
-    $.ajax({
-      url : form.attr("data-validate-username-url"),
-      type : "POST", // http method
-      data : form.serialize(),
-<!--      data1 : {-->
-<!--        name:"name",-->
-<!--        csrfmiddlewaretoken: '{{ csrf_token }}' , //This is must for security in Django-->
-<!--      }, // data sent with the post request-->
+    var isvalidate = form[0].checkValidity();
+    if (isvalidate) {
+      event.preventDefault();
+      $.ajax({
+        url : form.attr("data-validate-username-url"),
+        type : "POST", // http method
+        data : form.serialize(),
+<!--        data1 : {-->
+<!--          name:"name",-->
+<!--          csrfmiddlewaretoken: '{{ csrf_token }}' , //This is must for security in Django-->
+<!--        }, // data sent with the post request-->
 
-      // handle a successful response
-      success : function(response){
-        alert(response["id"]);
-      },
+        // handle a successful response
+        success : function(response){
+          alert(response["id"]);
+        },
 
-      // handle a non-successful response
-      error : function() {
+        // handle a non-successful response
+        error : function() {
 
-      }
-    });
+        }
+      });
+    }
   });
+
 </script>
