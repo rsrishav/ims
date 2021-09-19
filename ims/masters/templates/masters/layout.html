@@ -1,7 +1,34 @@
 {% extends "main/base.html" %}
 {% block title %}{% endblock %}
 {% block content %}
+<style>
+  .card_left_btn {
+    margin-bottom: -1rem;
+    margin-left: -1rem;
+    border-radius: 0rem 0rem 0rem 2rem;
+    width
+  }
+  .card_right_btn {
+    margin-bottom: -1rem;
+    margin-left: -0.26rem;
+    border-radius: 0rem 0rem 2rem 0rem;
+  }
 
+
+</style>
+<div class="card" style="width: 18rem;">
+  <!--  <img src="..." class="card-img-top" alt="...">-->
+  <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
+  <div class="card-body">
+    <h2 class="card-title">Category</h2>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+      content.</p>
+    <div class="d-grid d-md-flex">
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category_modal">Add</a>
+      <a href="#" class="btn btn-primary">Edit</a>
+    </div>
+
+  </div>
+</div>
 {% include "masters/category.html" %}
-
 {% endblock %}
