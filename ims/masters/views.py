@@ -17,7 +17,9 @@ def index(request):
             description=data.get("description")
         )
         data_model.save()
-        return JsonResponse(data_model.id, safe=False)
+        response = dict()
+        response["id"] = data_model.id
+        return JsonResponse(response)
     else:
         return render(request, TMP_MASTERS_INDEX, {})
 
@@ -33,6 +35,6 @@ def category(request):
         data_model.save()
         response = dict()
         response["id"] = data_model.id
-        return JsonResponse(response, safe=False)
+        return JsonResponse(response)
     else:
         return render(request, TMP_MASTERS_INDEX, {})
