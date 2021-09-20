@@ -1,28 +1,104 @@
 <style>
-  .card_left_btn {
-    margin-bottom: -1rem;
-    margin-left: -1rem;
-    border-radius: 0rem 0rem 0rem 2rem;
-    width
+  span {
+    width: 110px;
+    color: #001829 !important;
+    background-color: aliceblue !important;
   }
-  .card_right_btn {
-    margin-bottom: -1rem;
-    margin-left: -0.26rem;
-    border-radius: 0rem 0rem 2rem 0rem;
+
+  .alert {
+    margin-right: auto;
+    padding: 6px;
+    visibility: hidden;
+    content-visibility: hidden;
   }
 
 </style>
-<div class="card" style="width: 18rem;">
-  <!--  <img src="..." class="card-img-top" alt="...">-->
-  <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
-  <div class="card-body">
-    <h3 class="card-title">Category</h3>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-      content.</p>
-    <div class="d-grid d-md-flex">
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add</a>
-      <a href="#" class="btn btn-primary">Edit</a>
-    </div>
 
+<div class="modal fade" id="category_modal" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" data-save-url="{% url 'category' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div id="category_modal_body">
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_id">ID</span>
+              <input type="text" class="form-control" placeholder="ID" aria-label="ID"
+                     aria-describedby="lbl_product_id" readonly name="id" id="id">
+            </div>
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_title">Title</span>
+              <input type="text" class="form-control" placeholder="Title" aria-label="Title"
+                     aria-describedby="lbl_product_id" required name="title" id="title">
+            </div>
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_description">Description</span>
+              <input type="text" class="form-control" placeholder="Description" aria-label="Description"
+                     aria-describedby="lbl_product_id" required name="description" id="description">
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_category">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+              <use xlink:href="#check-circle-fill"/>
+            </svg>
+            <div>Record saved successfully.</div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_category">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+              <use xlink:href="#exclamation-triangle-fill"/>
+            </svg>
+            <div>Record not saved.</div>
+          </div>
+          <button class="btn btn-primary" id="btn_save_category">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+
+<script>
+  var is_saved_category = false;
+  $(".modal").on("hidden.bs.modal", function () {
+    if(is_saved_category){
+      window.location = "{% url 'layout' %}";
+    }
+  });
+  $('#btn_save_category').click(function(event){
+    var form = $(this).closest("form");
+    var isvalidate = form[0].checkValidity();
+    if (isvalidate) {
+      event.preventDefault();
+      $.ajax({
+        url : form.attr("data-save-url"),
+        type : "POST", // http method
+        data : form.serialize(),
+
+        // handle a successful response
+        success : function(response){
+          $('#btn_save_category').hide();
+          $("form :input").attr("disabled", true);
+          $("form :button").attr("disabled", false);
+          $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+          $('#success_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
+          is_saved_category = true;
+        },
+
+        // handle a non-successful response
+        error : function() {
+          $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+          $('#failed_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
+          is_saved_category = false;
+        }
+      });
+    }
+  });
+
+</script>
