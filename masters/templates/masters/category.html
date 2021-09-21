@@ -83,12 +83,19 @@
 
         // handle a successful response
         success : function(response){
-          $('#btn_save_category').hide();
-          $("form :input").attr("disabled", true);
-          $("form :button").attr("disabled", false);
-          $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-          $('#success_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
-          is_saved_category = true;
+          if(response["success"]){
+            $('#btn_save_category').hide();
+            $("form :input").attr("disabled", true);
+            $("form :button").attr("disabled", false);
+            $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#success_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_category = true;
+          }
+          else{
+            $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#failed_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_category = false;
+          }
         },
 
         // handle a non-successful response

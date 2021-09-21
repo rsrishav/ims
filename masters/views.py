@@ -17,9 +17,7 @@ def index(request):
             description=data.get("description")
         )
         data_model.save()
-        response = dict()
-        response["id"] = data_model.id
-        return JsonResponse(response)
+        return JsonResponse(data_model.id, safe=False)
     else:
         return render(request, TMP_MASTERS_INDEX, {})
 
@@ -27,14 +25,15 @@ def index(request):
 @login_required(login_url=URL_LOGIN)
 def category(request):
     if request.method == "POST":
-        data = request.POST.dict()
-        data_model = Category(
-            title=data.get("title"),
-            description=data.get("description")
-        )
-        data_model.save()
-        response = dict()
-        response["id"] = data_model.id
-        return JsonResponse(response)
+        try:
+            data = request.POST.dict()
+            data_model = Category(
+                title=data.get("title"),
+                description=data.get("description")
+            )
+            data_model.save()
+            return JsonResponse({"success": True}, safe=False)
+        except:
+            return JsonResponse({"success": False}, safe=False)
     else:
         return render(request, TMP_MASTERS_INDEX, {})
