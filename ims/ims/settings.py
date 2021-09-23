@@ -98,7 +98,7 @@ database2 = {
     }
 }
 
-DATABASES = database2
+DATABASES = database1 if os.environ.__dict__.get("_data").get("DEV_DB_SELECT") else database2
 
 AUTH_PASSWORD_VALIDATORS = [
     {

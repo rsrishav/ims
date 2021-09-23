@@ -6,20 +6,42 @@
     width: -webkit-fill-available;
   }
 
+  .card {
+    width: 18rem;
+  }
+
 
 </style>
-<div class="card" style="width: 18rem;">
-  <!--  <img src="..." class="card-img-top" alt="...">-->
-  <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
-  <div class="card-body">
-    <h2 class="card-title">Category</h2>
-    <p class="card-text">Category Operations.</p>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal">Add</button>
-      <button class="btn btn-primary mx-auto custom" type="button" disabled>Edit</button>
+<div class="row">
+  <div class="col-auto">
+    <div class="card">
+      <!--  <img src="..." class="card-img-top" alt="...">-->
+      <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
+      <div class="card-body">
+        <h2 class="card-title">Category</h2>
+        <p class="card-text">Category Operations.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_add_modal">Add
+          </button>
+          <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button>
+        </div>
+      </div>
     </div>
-
+  </div>
+  <div class="col-auto">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Color</h2>
+        <p class="card-text">Color Operations.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#color_add_modal">Add
+          </button>
+          <button class="btn btn-primary mx-auto custom" type="button" disabled>Edit</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% include "masters/category.html" %}
+{% include "masters/color.html" %}
 {% endblock %}

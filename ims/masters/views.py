@@ -37,3 +37,20 @@ def category(request):
             return JsonResponse({"success": False}, safe=False)
     else:
         return render(request, TMP_MASTERS_INDEX, {})
+
+
+@login_required(login_url=URL_LOGIN)
+def color(request):
+    if request.method == "POST":
+        try:
+            data = request.POST.dict()
+            data_model = Category(
+                title=data.get("title"),
+                description=data.get("description")
+            )
+            data_model.save()
+            return JsonResponse({"success": True}, safe=False)
+        except:
+            return JsonResponse({"success": False}, safe=False)
+    else:
+        return render(request, TMP_MASTERS_INDEX, {})
