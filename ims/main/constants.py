@@ -22,6 +22,7 @@ NAMES_PROD_ADD = "add"
 # masters
 NAMES_MASTERS_INDEX = "layout"
 NAMES_MASTERS_CATEGORY = "category"
+NAMES_MASTERS_COLOR = "color"
 
 
 """ TEMPLATES """

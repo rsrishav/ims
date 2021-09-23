@@ -2,33 +2,66 @@
 {% block title %}{% endblock %}
 {% block content %}
 <style>
-  .card_left_btn {
-    margin-bottom: -1rem;
-    margin-left: -1rem;
-    border-radius: 0rem 0rem 0rem 2rem;
-    width
+  .custom {
+    width: -webkit-fill-available;
   }
-  .card_right_btn {
-    margin-bottom: -1rem;
-    margin-left: -0.26rem;
-    border-radius: 0rem 0rem 2rem 0rem;
+
+  .card {
+    width: 18rem;
   }
+
+  .nav-link.active {
+    color: #495057;
+    background-color: #7fffd4;
+    border-color: #dee2e6 #dee2e6 #7fffd4;
+  }
+
+  .tab-content {
+    height: 75vh;
+    background-color: aquamarine;
+    border: 1px solid #ff3366;
+  }
+
+  .tab-pane {
+    padding-top: 10px;
+  }
+
+
+
 
 
 </style>
-<div class="card" style="width: 18rem;">
-  <!--  <img src="..." class="card-img-top" alt="...">-->
-  <!--  <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>-->
-  <div class="card-body">
-    <h2 class="card-title">Category</h2>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-      content.</p>
-    <div class="d-grid d-md-flex">
-      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#category_modal">Add</a>
-      <a href="#" class="btn btn-primary">Edit</a>
+<div class="container">
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="category-tab" data-bs-toggle="tab" href="#category" role="tab"
+         aria-controls="category"
+         aria-selected="true">Category</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="color-tab" data-bs-toggle="tab" href="#color" role="tab" aria-controls="color"
+         aria-selected="false">Color</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="style-tab" data-bs-toggle="tab" href="#style" role="tab" aria-controls="style"
+         aria-selected="false">Style</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="category" role="tabpanel" aria-labelledby="category-tab">
+      {% include "masters/category.html" %}
     </div>
-
+    <div class="tab-pane fade" id="color" role="tabpanel" aria-labelledby="color-tab">
+      <div class="container">
+        <div class="row">Color Master</div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="style" role="tabpanel" aria-labelledby="style-tab">
+      <div class="container">
+        <div class="row">Style Master</div>
+      </div>
+    </div>
   </div>
 </div>
-{% include "masters/category.html" %}
+
 {% endblock %}

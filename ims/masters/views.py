@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from main.constants import *
 from masters.models import *
 from django.contrib import messages
-
+from django.core import serializers
 
 # Create your views here.
 @login_required(login_url=URL_LOGIN)
@@ -25,14 +25,34 @@ def index(request):
 @login_required(login_url=URL_LOGIN)
 def category(request):
     if request.method == "POST":
-        data = request.POST.dict()
-        data_model = Category(
-            title=data.get("title"),
-            description=data.get("description")
-        )
-        data_model.save()
-        response = dict()
-        response["id"] = data_model.id
-        return JsonResponse(response, safe=False)
+        try:
+            data = request.POST.dict()
+            data_model = Category(
+                title=data.get("title"),
+                description=data.get("description")
+            )
+            data_model.save()
+            return JsonResponse({"success": True})
+        except:
+            return JsonResponse({"success": False})
+    else:
+        records = Category.objects.all()
+        response = serializers.serialize("json", records)
+        return HttpResponse(response, content_type='application/json')
+
+
+@login_required(login_url=URL_LOGIN)
+def color(request):
+    if request.method == "POST":
+        try:
+            data = request.POST.dict()
+            data_model = Category(
+                title=data.get("title"),
+                description=data.get("description")
+            )
+            data_model.save()
+            return JsonResponse({"success": True}, safe=False)
+        except:
+            return JsonResponse({"success": False}, safe=False)
     else:
         return render(request, TMP_MASTERS_INDEX, {})

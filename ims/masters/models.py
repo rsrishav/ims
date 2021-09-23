@@ -6,10 +6,6 @@ class Category(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
 
-    def __int__(self, **kwargs):
-        self.title = kwargs.get("title")
-        self.description = kwargs.get("description")
-
 
 class Style(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
