@@ -26,15 +26,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="container">
-      <table class="table table-striped" id="tbl_category">
+    <div class="container table-overflow">
+      <table class="table table-striped" style="table-layout: fixed;" id="tbl_category">
         <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">ID</th>
-          <th scope="col">Title</th>
-          <th scope="col">Description</th>
-          <th scope="col">Actions</th>
+        <tr class="">
+          <th class="col-1" scope="col">#</th>
+          <th class="col-1"scope="col">ID</th>
+          <th class="col-1"scope="col">Title</th>
+          <th class="col-1"scope="col">Description</th>
+          <th class="col-1"scope="col">Actions</th>
         </tr>
         </thead>
         <tbody id="tbl_bdy_category">
@@ -45,8 +45,7 @@
 </div>
 
 
-<div class="modal fade" id="category_modal" tabindex="-1" aria-labelledby="category_modal_label"
-     aria-hidden="true">
+<div class="modal fade" id="category_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
