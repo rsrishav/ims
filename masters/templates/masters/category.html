@@ -12,9 +12,41 @@
     content-visibility: hidden;
   }
 
+
 </style>
 
-<div class="modal fade" id="category_modal" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
+<div class="container">
+  <div class="row">
+    <div class="col-10"><h4>Category Master</h4></div>
+    <div class="col">
+      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal"
+              onclick="categoryModalInit()">
+        Add Category
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container">
+      <table class="table table-striped" id="tbl_category">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Description</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="tbl_bdy_category">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="category_modal" tabindex="-1" aria-labelledby="category_modal_label"
+     aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,19 +97,75 @@
 </div>
 
 <script>
+
+  // ---- Populate category rows in table when function is called.
+  function categoryLoadData() {
+    $.ajax({
+      url: "{% url 'category' %}",
+      type: 'GET',
+      dataType: 'json', // added data type
+      success: function(data) {
+        console.log(data);
+        var rows = "";
+        var count = 1
+        for (var i = 0; i < data.length; i++) {
+          rows+= '<tr><th scope="row">' + count + '</th>' +
+            '<td>' + data[i].pk + '</td>' +
+            '<td>' + data[i].fields.title + '</td>' +
+            '<td>' + data[i].fields.description + '</td>' +
+            '<td><button class="btn btn-primary btn-sm" onclick="categoryEdit(this)" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button></td>' +
+            '</tr>';
+          count += 1;
+        }
+        $("#tbl_bdy_category").empty().append(rows);
+      }
+    });
+  }
+
+
+  function categoryGetID() {
+    var next_id = -1;
+    $.ajax({
+      url: "{% url 'category-id' %}",
+      type: 'GET',
+      async: false,
+      dataType: 'json', // added data type
+      success: function(data) {
+        next_id = data["next_id"];
+      }
+    });
+    return next_id;
+  }
+
+  //---- Modal Init
+  function categoryModalInit(form) {
+    $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#btn_save_category').show();
+    $("form :input").attr("disabled", false);
+    $("form :button").attr("disabled", false);
+    $('#category_modal form')[0].reset()
+    $("#category_modal_body #id").val(categoryGetID());
+  }
+
+  //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
   var is_saved_category = false;
-  $(".modal").on("hidden.bs.modal", function () {
+  $("#category_modal").on("hidden.bs.modal", function (modal) {
     if(is_saved_category){
-      window.location = "{% url 'layout' %}";
+      categoryLoadData();
+      is_saved_category = false;
     }
+    categoryModalInit(modal);
   });
+
+  //---- Add category in DB via modal.
   $('#btn_save_category').click(function(event){
     var form = $(this).closest("form");
     var isvalidate = form[0].checkValidity();
     if (isvalidate) {
       event.preventDefault();
       $.ajax({
-        url : form.attr("data-save-url"),
+        url : "{% url 'category' %}",
         type : "POST", // http method
         data : form.serialize(),
 
@@ -107,5 +195,14 @@
       });
     }
   });
+
+  function categoryEdit(event) {
+    var child = event.closest("tr").children;
+    $("#category_modal_body #id").val(child[1].innerText)
+    $("#category_modal_body #title").val(child[2].innerText)
+    $("#category_modal_body #description").val(child[3].innerText)
+  };
+
+  $(document).ready(categoryLoadData());
 
 </script>

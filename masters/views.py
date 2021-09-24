@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from main.constants import *
 from masters.models import *
 from django.contrib import messages
+from django.core import serializers
 
 
 # Create your views here.
@@ -23,7 +24,42 @@ def index(request):
 
 
 @login_required(login_url=URL_LOGIN)
+def getCategoryID(request):
+    if request.method == "GET":
+        try:
+            next_id = Category.objects.latest("id").id + 1
+            return JsonResponse({"success": True, "next_id": next_id})
+        except Exception as e:
+            return JsonResponse({"success": True, "error": str(e)})
+
+
+@login_required(login_url=URL_LOGIN)
 def category(request):
+    if request.method == "POST":
+        try:
+            data = request.POST.dict()
+            obj, created = Category.objects.update_or_create(pk=int(data.get("id")),
+                                                             defaults={'title': data.get("title"),
+                                                                       'description': data.get("description")},
+                                                             )
+            print(created)
+            print(obj)
+            # data_model = Category(
+            #     title=data.get("title"),
+            #     description=data.get("description")
+            # )
+            # data_model.save()
+            return JsonResponse({"success": True})
+        except Exception as e:
+            return JsonResponse({"success": False, "exception": str(e)})
+    else:
+        records = Category.objects.all()
+        response = serializers.serialize("json", records)
+        return HttpResponse(response, content_type='application/json')
+
+
+@login_required(login_url=URL_LOGIN)
+def color(request):
     if request.method == "POST":
         try:
             data = request.POST.dict()
