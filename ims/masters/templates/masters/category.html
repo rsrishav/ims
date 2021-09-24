@@ -20,7 +20,7 @@
     <div class="col-10"><h4>Category Master</h4></div>
     <div class="col">
       <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal"
-              onclick="modalInit()">
+              onclick="categoryModalInit()">
         Add Category
       </button>
     </div>
@@ -99,7 +99,7 @@
 <script>
 
   // ---- Populate category rows in table when function is called.
-  function loadData() {
+  function categoryLoadData() {
     $.ajax({
       url: "{% url 'category' %}",
       type: 'GET',
@@ -113,7 +113,7 @@
             '<td>' + data[i].pk + '</td>' +
             '<td>' + data[i].fields.title + '</td>' +
             '<td>' + data[i].fields.description + '</td>' +
-            '<td><button class="btn btn-primary btn-sm" onclick="editCategory(this)" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button></td>' +
+            '<td><button class="btn btn-primary btn-sm" onclick="categoryEdit(this)" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button></td>' +
             '</tr>';
           count += 1;
         }
@@ -122,25 +122,40 @@
     });
   }
 
+
+  function categoryGetID() {
+    var next_id = -1;
+    $.ajax({
+      url: "{% url 'category-id' %}",
+      type: 'GET',
+      async: false,
+      dataType: 'json', // added data type
+      success: function(data) {
+        next_id = data["next_id"];
+      }
+    });
+    return next_id;
+  }
+
   //---- Modal Init
-  function modalInit(form) {
+  function categoryModalInit(form) {
     $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
     $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
     $('#btn_save_category').show();
     $("form :input").attr("disabled", false);
     $("form :button").attr("disabled", false);
     $('#category_modal form')[0].reset()
+    $("#category_modal_body #id").val(categoryGetID());
   }
 
   //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
   var is_saved_category = false;
-  $(".modal").on("hidden.bs.modal", function (modal) {
+  $("#category_modal").on("hidden.bs.modal", function (modal) {
     if(is_saved_category){
-<!--      window.location = "{% url 'layout' %}";-->
-      loadData();
+      categoryLoadData();
       is_saved_category = false;
     }
-    modalInit(modal);
+    categoryModalInit(modal);
   });
 
   //---- Add category in DB via modal.
@@ -181,13 +196,13 @@
     }
   });
 
-  function editCategory(event) {
+  function categoryEdit(event) {
     var child = event.closest("tr").children;
     $("#category_modal_body #id").val(child[1].innerText)
     $("#category_modal_body #title").val(child[2].innerText)
     $("#category_modal_body #description").val(child[3].innerText)
   };
 
-  $(document).ready(loadData());
+  $(document).ready(categoryLoadData());
 
 </script>
