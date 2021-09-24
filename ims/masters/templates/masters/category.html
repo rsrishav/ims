@@ -11,12 +11,22 @@
     visibility: hidden;
     content-visibility: hidden;
   }
+  table#tbl_category td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
+  #tbl_category {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+  }
 
 </style>
 
-<div class="container">
-  <div class="row">
+<div class="container" style="max-width: none;">
+  <div class="row mb-2">
     <div class="col-10"><h4>Category Master</h4></div>
     <div class="col">
       <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal"
@@ -27,7 +37,7 @@
   </div>
   <div class="row">
     <div class="container table-overflow">
-      <table class="table table-striped" style="table-layout: fixed;" id="tbl_category">
+      <table class="table table-striped" id="tbl_category">
         <thead>
         <tr class="">
           <th class="col-1" scope="col">#</th>
