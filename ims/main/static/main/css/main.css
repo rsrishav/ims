@@ -125,7 +125,7 @@ table {
   border-spacing: 1;
   border-collapse: collapse;
   background: white;
-  border-radius: 10px;
+  border-radius: .5rem;
   overflow: hidden;
   width: 100%;
   margin: 0 auto;
@@ -176,13 +176,13 @@ tbody tr:nth-child(even) {
 tbody tr {
   font-family: OpenSans-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #444444;
   line-height: 1.2;
   font-weight: unset;
 }
 
 tbody tr:hover {
-  color: #555555;
+  color: #001829;
   background-color: #0095ff33;
   cursor: pointer;
 }

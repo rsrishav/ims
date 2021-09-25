@@ -31,10 +31,12 @@
     background-color: #e5f4ff;
     border: 1px solid;
     border-color: #dee2e6;
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem;
   }
 
   .tab-pane {
-    padding-top: 10px;
+    padding-top: 0.5rem;
   }
 </style>
 
@@ -51,7 +53,7 @@
 </svg>
 
 <div class="container" style="max-width: none;">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <ul class="nav nav-tabs" id="myTab" role="tablist" style="border: 0px;">
     <li class="nav-item" role="presentation">
       <a class="nav-link active" id="category-tab" data-bs-toggle="tab" href="#category" role="tab"
          aria-controls="category"
@@ -71,9 +73,7 @@
       {% include "masters/category.html" %}
     </div>
     <div class="tab-pane fade" id="color" role="tabpanel" aria-labelledby="color-tab">
-      <div class="container">
-        <div class="row">Color Master</div>
-      </div>
+
     </div>
     <div class="tab-pane fade" id="style" role="tabpanel" aria-labelledby="style-tab">
       <div class="container">

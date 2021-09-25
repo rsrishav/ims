@@ -24,6 +24,7 @@ NAMES_MASTERS_INDEX = "layout"
 NAMES_MASTERS_CATEGORY = "category"
 NAMES_MASTERS_CATEGORY_ID = "category-id"
 NAMES_MASTERS_COLOR = "color"
+NAMES_MASTERS_COLOR_ID = "color-id"
 
 
 """ TEMPLATES """
