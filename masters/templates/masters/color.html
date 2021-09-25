@@ -1,8 +1,9 @@
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 <style>
-  #color_add_modal_body span {
+  #color_modal_body span {
     width: 110px;
     color: #001829 !important;
-    background-color: aliceblue !important;
+    background-color: #e5f4ff !important;
   }
 
   .alert {
@@ -10,26 +11,73 @@
     padding: 6px;
     visibility: hidden;
     content-visibility: hidden;
+    position: absolute;
+    left: 0;
+    margin-left: 1rem;
+  }
+  table#tbl_color td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
+  #tbl_color {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+  }
 
 </style>
 
-<div class="modal fade" id="color_add_modal" tabindex="-1" aria-labelledby="color_add_modal_label" aria-hidden="true">
+<div class="container" style="max-width: none;">
+  <div class="row mb-2 align-items-center">
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Category Master</h4></div>
+    <div class="col mr-xl-1 mr-lg-1">
+      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#color_modal"
+              onclick="colorModalInit()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Add
+      </button>
+    </div>
+  </div>
+  <div class="row">
+			<div class="table-overflow">
+				<div class="table100">
+					<table id="tbl_color">
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">#</th>
+								<th class="column2">ID</th>
+								<th class="column3">Title</th>
+								<th class="column4">Description</th>
+								<th class="column5">Actions</th>
+							</tr>
+						</thead>
+						<tbody id="tbl_bdy_color">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--</div>-->
+
+
+<div class="modal fade" id="color_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="color_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Color</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" data-save-url="{% url 'color' %}">
         {% csrf_token %}
         <div class="modal-body">
-          <div id="color_add_modal_body">
+          <div id="color_modal_body">
             <div class="input-group mb-2">
               <span class="input-group-text" id="lbl_id">ID</span>
-              <input type="text" class="form-control" placeholder="ID" aria-label="ID" aria-describedby="lbl_product_id"
-                     readonly name="id" id="id">
+              <input type="text" class="form-control" placeholder="ID" aria-label="ID"
+                     aria-describedby="lbl_product_id" readonly name="id" id="id">
             </div>
             <div class="input-group mb-2">
               <span class="input-group-text" id="lbl_title">Title</span>
@@ -41,6 +89,7 @@
               <input type="text" class="form-control" placeholder="Description" aria-label="Description"
                      aria-describedby="lbl_product_id" required name="description" id="description">
             </div>
+
           </div>
         </div>
         <div class="modal-footer">
@@ -65,19 +114,77 @@
 </div>
 
 <script>
+
+  // ---- Populate color rows in table when function is called.
+  function colorLoadData() {
+    $.ajax({
+      url: "{% url 'color' %}",
+      type: 'GET',
+      dataType: 'json', // added data type
+      success: function(data) {
+        console.log(data);
+        data = data.data
+        var rows = "";
+        var count = 1
+        for (var i = 0; i < data.length; i++) {
+          rows+= '<tr>' +
+            '<td scope="row" class="column1">' + count + '</td>' +
+            '<td class="column2">' + data[i].pk + '</td>' +
+            '<td class="column3">' + data[i].fields.title + '</td>' +
+            '<td class="column4">' + data[i].fields.description + '</td>' +
+            '<td class="column5"><button class="btn btn-primary btn-sm" onclick="colorEdit(this)" data-bs-toggle="modal" data-bs-target="#color_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
+            '</tr>';
+          count += 1;
+        }
+        $("#tbl_bdy_color").empty().append(rows);
+      }
+    });
+  }
+
+
+  function colorGetID() {
+    var next_id = -1;
+    $.ajax({
+      url: "{% url 'color-id' %}",
+      type: 'GET',
+      async: false,
+      dataType: 'json', // added data type
+      success: function(data) {
+        next_id = data["next_id"];
+      }
+    });
+    return next_id;
+  }
+
+  //---- Modal Init
+  function colorModalInit(form) {
+    $('#success_alert_color').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#failed_alert_color').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#btn_save_color').show();
+    $("form :input").attr("disabled", false);
+    $("form :button").attr("disabled", false);
+    $('#color_modal form')[0].reset()
+    $("#color_modal_body #id").val(colorGetID());
+  }
+
+  //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
   var is_saved_color = false;
-  $(".modal").on("hidden.bs.modal", function () {
+  $("#color_modal").on("hidden.bs.modal", function (modal) {
     if(is_saved_color){
-      window.location = "{% url 'layout' %}";
+      colorLoadData();
+      is_saved_color = false;
     }
+    colorModalInit(modal);
   });
+
+  //---- Add color in DB via modal.
   $('#btn_save_color').click(function(event){
     var form = $(this).closest("form");
     var isvalidate = form[0].checkValidity();
     if (isvalidate) {
       event.preventDefault();
       $.ajax({
-        url : form.attr("data-save-url"),
+        url : "{% url 'color' %}",
         type : "POST", // http method
         data : form.serialize(),
 
@@ -108,5 +215,13 @@
     }
   });
 
+  function colorEdit(event) {
+    var child = event.closest("tr").children;
+    $("#color_modal_body #id").val(child[1].innerText)
+    $("#color_modal_body #title").val(child[2].innerText)
+    $("#color_modal_body #description").val(child[3].innerText)
+  };
+
+  $(document).ready(colorLoadData());
 
 </script>

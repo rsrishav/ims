@@ -55,7 +55,16 @@ def category(request):
     else:
         response = Category.get_all_records()
         return JsonResponse({"success": False, "data": response})
-        # return HttpResponse(response, content_type='application/json')
+
+
+@login_required(login_url=URL_LOGIN)
+def getColorID(request):
+    if request.method == "GET":
+        try:
+            next_id = Color.objects.latest("id").id + 1
+            return JsonResponse({"success": True, "next_id": next_id})
+        except Exception as e:
+            return JsonResponse({"success": True, "error": str(e)})
 
 
 @login_required(login_url=URL_LOGIN)

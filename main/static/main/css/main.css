@@ -125,7 +125,7 @@ table {
   border-spacing: 1;
   border-collapse: collapse;
   background: white;
-  border-radius: 10px;
+  border-radius: .5rem;
   overflow: hidden;
   width: 100%;
   margin: 0 auto;
@@ -176,13 +176,13 @@ tbody tr:nth-child(even) {
 tbody tr {
   font-family: OpenSans-Regular;
   font-size: 15px;
-  color: #808080;
+  color: #444444;
   line-height: 1.2;
   font-weight: unset;
 }
 
 tbody tr:hover {
-  color: #555555;
+  color: #001829;
   background-color: #0095ff33;
   cursor: pointer;
 }
@@ -229,11 +229,11 @@ tbody tr:hover {
   }
   table tbody tr {
     height: auto;
-    padding: 37px 0;
+    padding: 15px 0;
   }
   table tbody tr td {
-    padding-left: 40% !important;
-    margin-bottom: 24px;
+    padding-left: 35% !important;
+    margin-bottom: 10px;
   }
   table tbody tr td:last-child {
     margin-bottom: 0;
@@ -249,23 +249,21 @@ tbody tr:hover {
     left: 30px;
     top: 0;
   }
-  table tbody tr td:nth-child(1):before {
-    content: "Date";
+
+  table tbody tr td:first-child:before {
+    content: "#";
   }
   table tbody tr td:nth-child(2):before {
-    content: "Order ID";
+    content: "ID";
   }
   table tbody tr td:nth-child(3):before {
-    content: "Name";
+    content: "Title";
   }
   table tbody tr td:nth-child(4):before {
-    content: "Price";
+    content: "Description";
   }
   table tbody tr td:nth-child(5):before {
-    content: "Quantity";
-  }
-  table tbody tr td:nth-child(6):before {
-    content: "Total";
+    content: "Actions";
   }
 
   .column4,
