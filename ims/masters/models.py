@@ -1,34 +1,62 @@
 from django.db import models
+from django.core import serializers
+import json
 
 
 # Create your models here.
 class Category(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
 
-    def __int__(self, **kwargs):
-        self.title = kwargs.get("title")
-        self.description = kwargs.get("description")
+    @staticmethod
+    def get_all_records():
+        data = Category.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
 
 
 class Style(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
+
+    @staticmethod
+    def get_all_records():
+        data = Style.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
 
 
 class Color(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
+
+    @staticmethod
+    def get_all_records():
+        data = Color.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
 
 
 class Size(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
+
+    @staticmethod
+    def get_all_records():
+        data = Size.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
 
 
 class Package(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
+
+    @staticmethod
+    def get_all_records():
+        data = Package.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
 
 
 class HSNCode(models.Model):
@@ -38,3 +66,9 @@ class HSNCode(models.Model):
     limit_price = models.FloatField(max_length=50)
     above_limit_tax_perc = models.FloatField(max_length=50)
     description = models.CharField(max_length=250)
+
+    @staticmethod
+    def get_all_records():
+        data = HSNCode.objects.all()
+        data = json.loads(serializers.serialize("json", data))
+        return data
