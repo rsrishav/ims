@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from main.constants import *
 from django.contrib.auth.decorators import login_required
+from masters import models as master_model
 
 
 @login_required(login_url=URL_LOGIN)
@@ -11,12 +12,7 @@ def index(response):
 @login_required(login_url=URL_LOGIN)
 def add(response):
     if response.method == "POST":
-        # form = CreateNewItem(response.POST)
-        # if form.is_valid():
-        #     name = form.cleaned_data["name"]
-        #     t = ToDoList(name=name)
-        #     t.save()
-        #     return redirect(URL_LIST)
         return render(response, TMP_PROD_ADD, {})
     else:
-        return render(response, TMP_PROD_ADD, {})
+        category = master_model.Category.get_all_records()
+        return render(response, TMP_PROD_ADD, {"category": category})
