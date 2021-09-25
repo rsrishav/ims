@@ -10,6 +10,9 @@
     padding: 6px;
     visibility: hidden;
     content-visibility: hidden;
+    position: absolute;
+    left: 0;
+    margin-left: 1rem;
   }
   table#tbl_category td {
     white-space: nowrap;
@@ -36,23 +39,44 @@
     </div>
   </div>
   <div class="row">
-    <div class="container table-overflow">
-      <table class="table table-striped" id="tbl_category">
-        <thead>
-        <tr class="">
-          <th class="col-1" scope="col">#</th>
-          <th class="col-1"scope="col">ID</th>
-          <th class="col-1"scope="col">Title</th>
-          <th class="col-1"scope="col">Description</th>
-          <th class="col-1"scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody id="tbl_bdy_category">
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+<!--    <div class="container table-overflow">-->
+<!--      <table class="table table-striped" id="tbl_category">-->
+<!--        <thead>-->
+<!--        <tr class="">-->
+<!--          <th class="col-1" scope="col">#</th>-->
+<!--          <th class="col-1"scope="col">ID</th>-->
+<!--          <th class="col-1"scope="col">Title</th>-->
+<!--          <th class="col-1"scope="col">Description</th>-->
+<!--          <th class="col-1"scope="col">Actions</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody id="tbl_bdy_category">-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--    </div>-->
+
+<!--    	<div class="limiter">-->
+			<div class="table-overflow">
+				<div class="table100">
+					<table id="tbl_category">
+						<thead>
+							<tr class="table100-head">
+								<th class="column1">#</th>
+								<th class="column2">ID</th>
+								<th class="column3">Title</th>
+								<th class="column4">Description</th>
+								<th class="column5">Actions</th>
+							</tr>
+						</thead>
+						<tbody id="tbl_bdy_category">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<!--</div>-->
 
 
 <div class="modal fade" id="category_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
@@ -115,6 +139,7 @@
       dataType: 'json', // added data type
       success: function(data) {
         console.log(data);
+        data = data.data
         var rows = "";
         var count = 1
         for (var i = 0; i < data.length; i++) {
@@ -122,7 +147,7 @@
             '<td>' + data[i].pk + '</td>' +
             '<td>' + data[i].fields.title + '</td>' +
             '<td>' + data[i].fields.description + '</td>' +
-            '<td><button class="btn btn-primary btn-sm" onclick="categoryEdit(this)" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button></td>' +
+            '<td class="column5"><button class="btn btn-primary btn-sm" onclick="categoryEdit(this)" data-bs-toggle="modal" data-bs-target="#category_modal">Edit</button></td>' +
             '</tr>';
           count += 1;
         }

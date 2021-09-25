@@ -6,6 +6,13 @@ from main.constants import *
 from masters.models import *
 from django.contrib import messages
 from django.core import serializers
+import json
+
+
+def get_all_category() -> dict:
+    data = Category.objects.all()
+    data = json.loads(serializers.serialize("json", data))
+    return data
 
 
 # Create your views here.
@@ -42,20 +49,13 @@ def category(request):
                                                              defaults={'title': data.get("title"),
                                                                        'description': data.get("description")},
                                                              )
-            print(created)
-            print(obj)
-            # data_model = Category(
-            #     title=data.get("title"),
-            #     description=data.get("description")
-            # )
-            # data_model.save()
-            return JsonResponse({"success": True})
+            return JsonResponse({"success": True, "record_created": created, "record_updated": not created})
         except Exception as e:
             return JsonResponse({"success": False, "exception": str(e)})
     else:
-        records = Category.objects.all()
-        response = serializers.serialize("json", records)
-        return HttpResponse(response, content_type='application/json')
+        response = Category.get_all_records()
+        return JsonResponse({"success": False, "data": response})
+        # return HttpResponse(response, content_type='application/json')
 
 
 @login_required(login_url=URL_LOGIN)
