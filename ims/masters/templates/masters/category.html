@@ -31,8 +31,8 @@
 
 <div class="container" style="max-width: none;">
   <div class="row mb-2">
-    <div class="col-10"><h4>Category Master</h4></div>
-    <div class="col" style="margin-left: calc(var(--bs-gutter-x) * 3.8);">
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Category Master</h4></div>
+    <div class="col">
       <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal"
               onclick="categoryModalInit()">
         <i class="fa fa-plus" aria-hidden="true"></i> Add
@@ -128,7 +128,7 @@
         var count = 1
         for (var i = 0; i < data.length; i++) {
           rows+= '<tr>' +
-            '<th scope="row" class="column1">' + count + '</th>' +
+            '<td scope="row" class="column1">' + count + '</td>' +
             '<td class="column2">' + data[i].pk + '</td>' +
             '<td class="column3">' + data[i].fields.title + '</td>' +
             '<td class="column4">' + data[i].fields.description + '</td>' +
