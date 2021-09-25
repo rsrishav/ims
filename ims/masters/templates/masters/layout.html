@@ -64,8 +64,8 @@
          aria-selected="false">Color</a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link" id="style-tab" data-bs-toggle="tab" href="#style" role="tab" aria-controls="style"
-         aria-selected="false">Style</a>
+      <a class="nav-link" id="size-tab" data-bs-toggle="tab" href="#size" role="tab" aria-controls="size"
+         aria-selected="false">Size</a>
     </li>
   </ul>
   <div class="tab-content" id="myTabContent">
@@ -73,12 +73,10 @@
       {% include "masters/category.html" %}
     </div>
     <div class="tab-pane fade" id="color" role="tabpanel" aria-labelledby="color-tab">
-
+      {% include "masters/color.html" %}
     </div>
-    <div class="tab-pane fade" id="style" role="tabpanel" aria-labelledby="style-tab">
-      <div class="container">
-        <div class="row">Style Master</div>
-      </div>
+    <div class="tab-pane fade" id="size" role="tabpanel" aria-labelledby="size-tab">
+      {% include "masters/size.html" %}
     </div>
   </div>
 </div>

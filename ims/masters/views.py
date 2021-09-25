@@ -31,12 +31,14 @@ def index(request):
 
 
 @login_required(login_url=URL_LOGIN)
-def getCategoryID(request):
+def get_category_id(request):
     if request.method == "GET":
         try:
             next_id = Category.objects.latest("id").id + 1
             return JsonResponse({"success": True, "next_id": next_id})
         except Exception as e:
+            if Category.objects.count() == 0:
+                return JsonResponse({"success": True, "next_id": 1})
             return JsonResponse({"success": True, "error": str(e)})
 
 
@@ -59,17 +61,58 @@ def category(request):
 
 
 @login_required(login_url=URL_LOGIN)
+def get_color_id(request):
+    if request.method == "GET":
+        try:
+            next_id = Color.objects.latest("id").id + 1
+            return JsonResponse({"success": True, "next_id": next_id})
+        except Exception as e:
+            if Color.objects.count() == 0:
+                return JsonResponse({"success": True, "next_id": 1})
+            return JsonResponse({"success": True, "error": str(e)})
+
+
+@login_required(login_url=URL_LOGIN)
 def color(request):
     if request.method == "POST":
         try:
             data = request.POST.dict()
-            data_model = Category(
-                title=data.get("title"),
-                description=data.get("description")
-            )
-            data_model.save()
-            return JsonResponse({"success": True}, safe=False)
-        except:
-            return JsonResponse({"success": False}, safe=False)
+            obj, created = Color.objects.update_or_create(pk=int(data.get("id")),
+                                                             defaults={'title': data.get("title"),
+                                                                       'description': data.get("description")},
+                                                             )
+            return JsonResponse({"success": True, "record_created": created, "record_updated": not created})
+        except Exception as e:
+            return JsonResponse({"success": False, "exception": str(e)})
     else:
-        return render(request, TMP_MASTERS_INDEX, {})
+        response = Color.get_all_records()
+        return JsonResponse({"success": False, "data": response})
+
+
+@login_required(login_url=URL_LOGIN)
+def get_size_id(request):
+    if request.method == "GET":
+        try:
+            next_id = Size.objects.latest("id").id + 1
+            return JsonResponse({"success": True, "next_id": next_id})
+        except Exception as e:
+            if Size.objects.count() == 0:
+                return JsonResponse({"success": True, "next_id": 1})
+            return JsonResponse({"success": True, "error": str(e)})
+
+
+@login_required(login_url=URL_LOGIN)
+def size(request):
+    if request.method == "POST":
+        try:
+            data = request.POST.dict()
+            obj, created = Size.objects.update_or_create(pk=int(data.get("id")),
+                                                             defaults={'title': data.get("title"),
+                                                                       'description': data.get("description")},
+                                                             )
+            return JsonResponse({"success": True, "record_created": created, "record_updated": not created})
+        except Exception as e:
+            return JsonResponse({"success": False, "exception": str(e)})
+    else:
+        response = Size.get_all_records()
+        return JsonResponse({"success": False, "data": response})
