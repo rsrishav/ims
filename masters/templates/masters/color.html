@@ -26,12 +26,35 @@
     width: 100%;
     white-space: nowrap;
   }
+  
+  #tbl_color th.column1, #tbl_color td.column1 {
+    width: 10%;
+    padding-left: 40px;
+  }
+
+  #tbl_color th.column2, #tbl_color td.column2 {
+    width: 10%;
+  }
+
+  #tbl_color th.column3, #tbl_color td.column3 {
+    width: 25%;
+  }
+
+  #tbl_color th.column4, #tbl_color td.column4 {
+    width: 40%;
+<!--    text-align: center;-->
+  }
+
+  #tbl_color th.column5, #tbl_color td.column5 {
+    width: 15%;
+    text-align: center;
+  }
 
 </style>
 
 <div class="container" style="max-width: none;">
   <div class="row mb-2 align-items-center">
-    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Category Master</h4></div>
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Color Master</h4></div>
     <div class="col mr-xl-1 mr-lg-1">
       <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#color_modal"
               onclick="colorModalInit()">
@@ -67,7 +90,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Color</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form method="post" data-save-url="{% url 'color' %}">

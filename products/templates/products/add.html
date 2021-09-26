@@ -23,14 +23,19 @@
   div.dropdown-menu {
     max-height: 376px !important;
     overflow: hidden !important;
-    min-height: 160px !important;
     position: absolute !important;
     transform: initial !important;
     top: 100% !important;
     left: 0px !important;
     will-change: transform !important;
+  }
+
+  #collapseOne div.dropdown-menu {
     max-width: 100% !important;
-}
+  }
+  #collapseTwo div.dropdown-menu {
+    max-width: 150% !important;
+  }
 
 </style>
 
@@ -56,15 +61,15 @@
             <div class="accordion-body">
               <div class="row" style="margin-bottom: -0.5rem;">
                 <div class="col-md">
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-2">
                     <span class="input-group-text" id="lbl_active">Active</span>
-                    <div class="input-group-text" style="width: 37px;background-color: #e9ecef !important;">
+                    <div class="input-group-text checkbox_inp" style="width: 37px;">
                       <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Active"
                              style="margin-left: -2px;" name="active" id="active">
                     </div>
                   </div>
                 </div>
-                <div class="col-md">
+                <div class="col-md mb-2">
                   <div class="input-group mb-2">
                     <span class="input-group-text" id="lbl_code">Code</span>
                     <input type="text" class="form-control" placeholder="Code" aria-label="Code"
@@ -79,25 +84,37 @@
               </div>
               <div class="input-group mb-2">
                 <span class="input-group-text" id="lbl_category">Category</span>
-
                 <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true"
-                        title="Choose cagtegory" aria-label="Category" aria-describedby="lbl_category" name="category"
+                        title="Choose Category" aria-label="Category" aria-describedby="lbl_category" name="category"
                         id="category">
                   {% for cat in category %}
-                  <option>{{ cat.fields.title }}</option>
+                  <option value="{{ cat.pk }}">{{ cat.fields.title }}</option>
                   {% endfor %}
                 </select>
-
               </div>
               <div class="input-group mb-2">
                 <span class="input-group-text" id="lbl_article">Article</span>
-                <input type="text" class="form-control" placeholder="Article" aria-label="Article"
-                       aria-describedby="lbl_article" name="article" id="article">
+<!--                <input type="text" class="form-control" placeholder="Article" aria-label="Article"-->
+<!--                       aria-describedby="lbl_article" name="article" id="article">-->
+                <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true"
+                        title="Choose Article" aria-label="Article" aria-describedby="lbl_article" name="article"
+                        id="article">
+                  {% for art in article %}
+                  <option value="{{ art.pk }}">{{ art.fields.title }}</option>
+                  {% endfor %}
+                </select>
               </div>
               <div class="input-group mb-2">
                 <span class="input-group-text" id="lbl_hsn_code">HSN Code</span>
-                <input type="text" class="form-control" placeholder="HSN Code" aria-label="HSN Code"
-                       aria-describedby="lbl_hsn_code" name="hsn_code" id="hsn_code">
+<!--                <input type="text" class="form-control" placeholder="HSN Code" aria-label="HSN Code"-->
+<!--                       aria-describedby="lbl_hsn_code" name="hsn_code" id="hsn_code">-->
+                <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true"
+                        title="Choose HSN Code" aria-label="HSN Code" aria-describedby="lbl_hsn_code" name="hsn_code"
+                        id="hsn_code">
+                  {% for cat in hsn_code %}
+                  <option value="{{ cat.pk }}">{{ cat.fields.title }}</option>
+                  {% endfor %}
+                </select>
               </div>
               <div class="input-group mb-2">
                 <span class="input-group-text" id="lbl_description">Description</span>
@@ -177,15 +194,29 @@
                 <div class="col">
                   <div class="input-group mb-2">
                     <span class="input-group-text" id="lbl_color">Color</span>
-                    <input type="text" class="form-control" placeholder="Color" aria-label="Color"
-                           aria-describedby="lbl_color" name="color" id="color">
+                    <!--                    <input type="text" class="form-control" placeholder="Color" aria-label="Color"-->
+                    <!--                           aria-describedby="lbl_color" name="color" id="color">-->
+                    <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true"
+                            title="Choose Color" aria-label="Color" aria-describedby="lbl_color" name="color"
+                            id="color">
+                      {% for col in color %}
+                      <option value="{{ col.pk }}">{{ col.fields.title }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                 </div>
                 <div class="col">
                   <div class="input-group mb-2">
-                    <span class="input-group-text" id="lbl_style">Style</span>
-                    <input type="text" class="form-control" placeholder="Style" aria-label="Style"
-                           aria-describedby="lbl_style" name="style" id="style">
+                    <span class="input-group-text" id="lbl_size">Size</span>
+<!--                    <input type="text" class="form-control" placeholder="Size" aria-label="Size"-->
+<!--                           aria-describedby="lbl_size" name="size" id="size">-->
+                    <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true"
+                            title="Choose Size" aria-label="Size" aria-describedby="lbl_size" name="size"
+                            id="size">
+                      {% for st in size %}
+                      <option value="{{ st.pk }}">{{ st.fields.title }}</option>
+                      {% endfor %}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -249,6 +280,13 @@
   $('.radio_btn').click(function() {
     $(this).find('input').prop('checked', true)
   });
+
+  $('.checkbox_inp').click(function ()
+  {
+    var checkbox = $(this).find('input[type=checkbox]');
+    checkbox.prop("checked", !checkbox.prop("checked"));
+  });
+
 
 </script>
 {% endblock %}

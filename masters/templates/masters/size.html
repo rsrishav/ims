@@ -1,9 +1,9 @@
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 <style>
-  #category_modal_body span {
+  #size_modal_body span {
     width: 110px;
-    color: #001829 !important;
-    background-color: #e5f4ff !important;
+    size: #001829 !important;
+    background-size: #e5f4ff !important;
   }
 
   .alert {
@@ -15,37 +15,37 @@
     left: 0;
     margin-left: 1rem;
   }
-  table#tbl_category td {
+  table#tbl_size td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  #tbl_category {
+  #tbl_size {
     table-layout: fixed;
     width: 100%;
     white-space: nowrap;
   }
   
-  #tbl_category th.column1, #tbl_category td.column1 {
+  #tbl_size th.column1, #tbl_size td.column1 {
     width: 10%;
     padding-left: 40px;
   }
 
-  #tbl_category th.column2, #tbl_category td.column2 {
+  #tbl_size th.column2, #tbl_size td.column2 {
     width: 10%;
   }
 
-  #tbl_category th.column3, #tbl_category td.column3 {
+  #tbl_size th.column3, #tbl_size td.column3 {
     width: 25%;
   }
 
-  #tbl_category th.column4, #tbl_category td.column4 {
+  #tbl_size th.column4, #tbl_size td.column4 {
     width: 40%;
 <!--    text-align: center;-->
   }
 
-  #tbl_category th.column5, #tbl_category td.column5 {
+  #tbl_size th.column5, #tbl_size td.column5 {
     width: 15%;
     text-align: center;
   }
@@ -54,10 +54,10 @@
 
 <div class="container" style="max-width: none;">
   <div class="row mb-2 align-items-center">
-    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Category Master</h4></div>
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Size Master</h4></div>
     <div class="col mr-xl-1 mr-lg-1">
-      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#category_modal"
-              onclick="categoryModalInit()">
+      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#size_modal"
+              onclick="sizeModalInit()">
         <i class="fa fa-plus" aria-hidden="true"></i> Add
       </button>
     </div>
@@ -65,7 +65,7 @@
   <div class="row">
 			<div class="table-overflow">
 				<div class="table100">
-					<table id="tbl_category">
+					<table id="tbl_size">
 						<thead>
 							<tr class="table100-head">
 								<th class="column1">#</th>
@@ -75,7 +75,7 @@
 								<th class="column5">Actions</th>
 							</tr>
 						</thead>
-						<tbody id="tbl_bdy_category">
+						<tbody id="tbl_bdy_size">
 						</tbody>
 					</table>
 				</div>
@@ -86,17 +86,17 @@
 <!--</div>-->
 
 
-<div class="modal fade" id="category_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="category_modal_label" aria-hidden="true">
+<div class="modal fade" id="size_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="size_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Size</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" data-save-url="{% url 'category' %}">
+      <form method="post" data-save-url="{% url 'size' %}">
         {% csrf_token %}
         <div class="modal-body">
-          <div id="category_modal_body">
+          <div id="size_modal_body">
             <div class="input-group mb-2">
               <span class="input-group-text" id="lbl_id">ID</span>
               <input type="text" class="form-control" placeholder="ID" aria-label="ID"
@@ -116,19 +116,19 @@
           </div>
         </div>
         <div class="modal-footer">
-          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_category">
+          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_size">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
               <use xlink:href="#check-circle-fill"/>
             </svg>
             <div>Record saved successfully.</div>
           </div>
-          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_category">
+          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_size">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
               <use xlink:href="#exclamation-triangle-fill"/>
             </svg>
             <div>Record not saved.</div>
           </div>
-          <button class="btn btn-primary" id="btn_save_category">Save changes</button>
+          <button class="btn btn-primary" id="btn_save_size">Save changes</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </form>
@@ -138,10 +138,10 @@
 
 <script>
 
-  // ---- Populate category rows in table when function is called.
-  function categoryLoadData() {
+  // ---- Populate size rows in table when function is called.
+  function sizeLoadData() {
     $.ajax({
-      url: "{% url 'category' %}",
+      url: "{% url 'size' %}",
       type: 'GET',
       dataType: 'json', // added data type
       success: function(data) {
@@ -155,20 +155,20 @@
             '<td class="column2">' + data[i].pk + '</td>' +
             '<td class="column3">' + data[i].fields.title + '</td>' +
             '<td class="column4">' + data[i].fields.description + '</td>' +
-            '<td class="column5"><button class="btn btn-primary btn-sm" onclick="categoryEdit(this)" data-bs-toggle="modal" data-bs-target="#category_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
+            '<td class="column5"><button class="btn btn-primary btn-sm" onclick="sizeEdit(this)" data-bs-toggle="modal" data-bs-target="#size_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
             '</tr>';
           count += 1;
         }
-        $("#tbl_bdy_category").empty().append(rows);
+        $("#tbl_bdy_size").empty().append(rows);
       }
     });
   }
 
 
-  function categoryGetID() {
+  function sizeGetID() {
     var next_id = -1;
     $.ajax({
-      url: "{% url 'category-id' %}",
+      url: "{% url 'size-id' %}",
       type: 'GET',
       async: false,
       dataType: 'json', // added data type
@@ -180,71 +180,71 @@
   }
 
   //---- Modal Init
-  function categoryModalInit(form) {
-    $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-    $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-    $('#btn_save_category').show();
+  function sizeModalInit(form) {
+    $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#failed_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#btn_save_size').show();
     $("form :input").attr("disabled", false);
     $("form :button").attr("disabled", false);
-    $('#category_modal form')[0].reset()
-    $("#category_modal_body #id").val(categoryGetID());
+    $('#size_modal form')[0].reset()
+    $("#size_modal_body #id").val(sizeGetID());
   }
 
   //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
-  var is_saved_category = false;
-  $("#category_modal").on("hidden.bs.modal", function (modal) {
-    if(is_saved_category){
-      categoryLoadData();
-      is_saved_category = false;
+  var is_saved_size = false;
+  $("#size_modal").on("hidden.bs.modal", function (modal) {
+    if(is_saved_size){
+      sizeLoadData();
+      is_saved_size = false;
     }
-    categoryModalInit(modal);
+    sizeModalInit(modal);
   });
 
-  //---- Add category in DB via modal.
-  $('#btn_save_category').click(function(event){
+  //---- Add size in DB via modal.
+  $('#btn_save_size').click(function(event){
     var form = $(this).closest("form");
     var isvalidate = form[0].checkValidity();
     if (isvalidate) {
       event.preventDefault();
       $.ajax({
-        url : "{% url 'category' %}",
+        url : "{% url 'size' %}",
         type : "POST", // http method
         data : form.serialize(),
 
         // handle a successful response
         success : function(response){
           if(response["success"]){
-            $('#btn_save_category').hide();
+            $('#btn_save_size').hide();
             $("form :input").attr("disabled", true);
             $("form :button").attr("disabled", false);
-            $('#failed_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-            $('#success_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
-            is_saved_category = true;
+            $('#failed_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#success_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_size = true;
           }
           else{
-            $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-            $('#failed_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
-            is_saved_category = false;
+            $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#failed_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_size = false;
           }
         },
 
         // handle a non-successful response
         error : function() {
-          $('#success_alert_category').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-          $('#failed_alert_category').show().css({"visibility": "visible", "content-visibility": "visible"});
-          is_saved_category = false;
+          $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+          $('#failed_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
+          is_saved_size = false;
         }
       });
     }
   });
 
-  function categoryEdit(event) {
+  function sizeEdit(event) {
     var child = event.closest("tr").children;
-    $("#category_modal_body #id").val(child[1].innerText)
-    $("#category_modal_body #title").val(child[2].innerText)
-    $("#category_modal_body #description").val(child[3].innerText)
+    $("#size_modal_body #id").val(child[1].innerText)
+    $("#size_modal_body #title").val(child[2].innerText)
+    $("#size_modal_body #description").val(child[3].innerText)
   };
 
-  $(document).ready(categoryLoadData());
+  $(document).ready(sizeLoadData());
 
 </script>

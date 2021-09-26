@@ -15,4 +15,6 @@ def add(response):
         return render(response, TMP_PROD_ADD, {})
     else:
         category = master_model.Category.get_all_records()
-        return render(response, TMP_PROD_ADD, {"category": category})
+        color = master_model.Color.get_all_records()
+        size = master_model.Size.get_all_records()
+        return render(response, TMP_PROD_ADD, {"category": category, "color": color, "size": size})
