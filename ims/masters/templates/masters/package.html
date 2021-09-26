@@ -1,9 +1,9 @@
 <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
 <style>
-  #size_modal_body span {
+  #package_modal_body span {
     width: 110px;
-    size: #001829 !important;
-    background-size: #e5f4ff !important;
+    package: #001829 !important;
+    background-package: #e5f4ff !important;
   }
 
   .alert {
@@ -15,38 +15,34 @@
     left: 0;
     margin-left: 1rem;
   }
-  table#tbl_size td {
+  table#tbl_package td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  #tbl_size {
+  #tbl_package {
     table-layout: fixed;
     width: 100%;
     white-space: nowrap;
   }
-  
-  #tbl_size th.column1, #tbl_size td.column1 {
-    width: 10%;
+
+
+  #tbl_package th.column1, #tbl_package td.column1 {
+    width: 15%;
     padding-left: 40px;
   }
 
-  #tbl_size th.column2, #tbl_size td.column2 {
-    width: 10%;
-  }
-
-  #tbl_size th.column3, #tbl_size td.column3 {
-    width: 25%;
-  }
-
-  #tbl_size th.column4, #tbl_size td.column4 {
-    width: 40%;
-<!--    text-align: center;-->
-  }
-
-  #tbl_size th.column5, #tbl_size td.column5 {
+  #tbl_package th.column2, #tbl_package td.column2 {
     width: 15%;
+  }
+
+  #tbl_package th.column3, #tbl_package td.column3 {
+    width: 50%;
+  }
+
+  #tbl_package th.column4, #tbl_package td.column4 {
+    width: 20%;
     text-align: center;
   }
 
@@ -54,28 +50,27 @@
 
 <div class="container" style="max-width: none;">
   <div class="row mb-2 align-items-center">
-    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Size Master</h4></div>
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Package Master</h4></div>
     <div class="col mr-xl-1 mr-lg-1">
-      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#size_modal"
-              onclick="sizeModalInit()">
+      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#package_modal"
+              onclick="packageModalInit()">
         <i class="fa fa-plus" aria-hidden="true"></i> Add
       </button>
     </div>
   </div>
-  <div class="row">
+  <div class="row package_cls">
 			<div class="table-overflow">
 				<div class="table100">
-					<table id="tbl_size">
+					<table id="tbl_package">
 						<thead>
 							<tr class="table100-head">
 								<th class="column1">#</th>
 								<th class="column2">ID</th>
 								<th class="column3">Title</th>
-								<th class="column4">Description</th>
-								<th class="column5">Actions</th>
+								<th class="column4">Actions</th>
 							</tr>
 						</thead>
-						<tbody id="tbl_bdy_size">
+						<tbody id="tbl_bdy_package">
 						</tbody>
 					</table>
 				</div>
@@ -86,17 +81,17 @@
 <!--</div>-->
 
 
-<div class="modal fade" id="size_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="size_modal_label" aria-hidden="true">
+<div class="modal fade" id="package_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="package_modal_label" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Size</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Package</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form method="post" data-save-url="{% url 'size' %}">
+      <form method="post" data-save-url="{% url 'package' %}">
         {% csrf_token %}
         <div class="modal-body">
-          <div id="size_modal_body">
+          <div id="package_modal_body">
             <div class="input-group mb-2">
               <span class="input-group-text" id="lbl_id">ID</span>
               <input type="text" class="form-control" placeholder="ID" aria-label="ID"
@@ -107,28 +102,28 @@
               <input type="text" class="form-control" placeholder="Title" aria-label="Title"
                      aria-describedby="lbl_product_id" required name="title" id="title">
             </div>
-            <div class="input-group mb-2">
-              <span class="input-group-text" id="lbl_description">Description</span>
-              <input type="text" class="form-control" placeholder="Description" aria-label="Description"
-                     aria-describedby="lbl_product_id" required name="description" id="description">
-            </div>
+<!--            <div class="input-group mb-2">-->
+<!--              <span class="input-group-text" id="lbl_description">Description</span>-->
+<!--              <input type="text" class="form-control" placeholder="Description" aria-label="Description"-->
+<!--                     aria-describedby="lbl_product_id" required name="description" id="description">-->
+<!--            </div>-->
 
           </div>
         </div>
         <div class="modal-footer">
-          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_size">
+          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_package">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
               <use xlink:href="#check-circle-fill"/>
             </svg>
             <div>Record saved successfully.</div>
           </div>
-          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_size">
+          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_package">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
               <use xlink:href="#exclamation-triangle-fill"/>
             </svg>
             <div>Record not saved.</div>
           </div>
-          <button class="btn btn-primary" id="btn_save_size">Save changes</button>
+          <button class="btn btn-primary" id="btn_save_package">Save changes</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </form>
@@ -138,10 +133,10 @@
 
 <script>
 
-  // ---- Populate size rows in table when function is called.
-  function sizeLoadData() {
+  // ---- Populate package rows in table when function is called.
+  function packageLoadData() {
     $.ajax({
-      url: "{% url 'size' %}",
+      url: "{% url 'package' %}",
       type: 'GET',
       dataType: 'json', // added data type
       success: function(data) {
@@ -154,21 +149,20 @@
             '<td scope="row" class="column1">' + count + '</td>' +
             '<td class="column2">' + data[i].pk + '</td>' +
             '<td class="column3">' + data[i].fields.title + '</td>' +
-            '<td class="column4">' + data[i].fields.description + '</td>' +
-            '<td class="column5"><button class="btn btn-primary btn-sm" onclick="sizeEdit(this)" data-bs-toggle="modal" data-bs-target="#size_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
+            '<td class="column4"><button class="btn btn-primary btn-sm" onclick="packageEdit(this)" data-bs-toggle="modal" data-bs-target="#package_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
             '</tr>';
           count += 1;
         }
-        $("#tbl_bdy_size").empty().append(rows);
+        $("#tbl_bdy_package").empty().append(rows);
       }
     });
   }
 
 
-  function sizeGetID() {
+  function packageGetID() {
     var next_id = -1;
     $.ajax({
-      url: "{% url 'size-id' %}",
+      url: "{% url 'package-id' %}",
       type: 'GET',
       async: false,
       dataType: 'json', // added data type
@@ -180,71 +174,70 @@
   }
 
   //---- Modal Init
-  function sizeModalInit(form) {
-    $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-    $('#failed_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-    $('#btn_save_size').show();
+  function packageModalInit(form) {
+    $('#success_alert_package').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#failed_alert_package').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#btn_save_package').show();
     $("form :input").attr("disabled", false);
     $("form :button").attr("disabled", false);
-    $('#size_modal form')[0].reset()
-    $("#size_modal_body #id").val(sizeGetID());
+    $('#package_modal form')[0].reset()
+    $("#package_modal_body #id").val(packageGetID());
   }
 
   //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
-  var is_saved_size = false;
-  $("#size_modal").on("hidden.bs.modal", function (modal) {
-    if(is_saved_size){
-      sizeLoadData();
-      is_saved_size = false;
+  var is_saved_package = false;
+  $("#package_modal").on("hidden.bs.modal", function (modal) {
+    if(is_saved_package){
+      packageLoadData();
+      is_saved_package = false;
     }
-    sizeModalInit(modal);
+    packageModalInit(modal);
   });
 
-  //---- Add size in DB via modal.
-  $('#btn_save_size').click(function(event){
+  //---- Add package in DB via modal.
+  $('#btn_save_package').click(function(event){
     var form = $(this).closest("form");
     var isvalidate = form[0].checkValidity();
     if (isvalidate) {
       event.preventDefault();
       $.ajax({
-        url : "{% url 'size' %}",
+        url : "{% url 'package' %}",
         type : "POST", // http method
         data : form.serialize(),
 
         // handle a successful response
         success : function(response){
           if(response["success"]){
-            $('#btn_save_size').hide();
+            $('#btn_save_package').hide();
             $("form :input").attr("disabled", true);
             $("form :button").attr("disabled", false);
-            $('#failed_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-            $('#success_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
-            is_saved_size = true;
+            $('#failed_alert_package').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#success_alert_package').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_package = true;
           }
           else{
-            $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-            $('#failed_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
-            is_saved_size = false;
+            $('#success_alert_package').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#failed_alert_package').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_package = false;
           }
         },
 
         // handle a non-successful response
         error : function() {
-          $('#success_alert_size').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
-          $('#failed_alert_size').show().css({"visibility": "visible", "content-visibility": "visible"});
-          is_saved_size = false;
+          $('#success_alert_package').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+          $('#failed_alert_package').show().css({"visibility": "visible", "content-visibility": "visible"});
+          is_saved_package = false;
         }
       });
     }
   });
 
-  function sizeEdit(event) {
+  function packageEdit(event) {
     var child = event.closest("tr").children;
-    $("#size_modal_body #id").val(child[1].innerText)
-    $("#size_modal_body #title").val(child[2].innerText)
-    $("#size_modal_body #description").val(child[3].innerText)
+    $("#package_modal_body #id").val(child[1].innerText)
+    $("#package_modal_body #title").val(child[2].innerText)
   };
 
-  $(document).ready(sizeLoadData());
+  $(document).ready(packageLoadData());
 
 </script>

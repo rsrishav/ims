@@ -14,6 +14,13 @@ class Category(models.Model):
         data = json.loads(serializers.serialize("json", data))
         return data
 
+    @staticmethod
+    def get_one(pk):
+        data = Category.objects.get(pk=pk)
+        data = json.loads(serializers.serialize("json", [data]))[0]
+        data = {"pk": data["pk"], "title": data["fields"]["title"], "description": data["fields"]["description"]}
+        return data
+
 
 class Style(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
