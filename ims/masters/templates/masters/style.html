@@ -1,0 +1,282 @@
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<style>
+  #style_modal_body span {
+    width: 110px;
+    size: #001829 !important;
+    background-size: #e5f4ff !important;
+  }
+
+  .alert {
+    margin-right: auto;
+    padding: 6px;
+    visibility: hidden;
+    content-visibility: hidden;
+    position: absolute;
+    left: 0;
+    margin-left: 1rem;
+  }
+  table#tbl_style td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #tbl_style {
+    table-layout: fixed;
+    width: 100%;
+    white-space: nowrap;
+  }
+  
+  #tbl_style th.column1, #tbl_style td.column1 {
+    width: 10%;
+    padding-left: 40px;
+  }
+
+  #tbl_style th.column2, #tbl_style td.column2 {
+    width: 10%;
+  }
+
+  #tbl_style th.column3, #tbl_style td.column3 {
+    width: 20%;
+  }
+
+  #tbl_style th.column4, #tbl_style td.column4 {
+    width: 30%;
+  }
+
+  #tbl_style th.column5, #tbl_style td.column5 {
+    width: 20%;
+  }
+
+  #tbl_style th.column6, #tbl_style td.column6 {
+    width: 10%;
+    text-align: center;
+  }
+
+
+</style>
+
+<div class="container" style="max-width: none;">
+  <div class="row mb-2 align-items-center">
+    <div class="col-auto col-lg-10 col-md-8 col-sm-7"><h4>Style Master</h4></div>
+    <div class="col mr-xl-1 mr-lg-1">
+      <button class="btn btn-primary mx-auto custom" data-bs-toggle="modal" data-bs-target="#style_modal"
+              onclick="styleModalInit()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Add
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-overflow">
+      <div class="table100">
+        <table id="tbl_style">
+          <thead>
+          <tr class="table100-head">
+            <th class="column1">#</th>
+            <th class="column2">ID</th>
+            <th class="column3">Title</th>
+            <th class="column4">Description</th>
+            <th class="column5">Category</th>
+            <th class="column6">Actions</th>
+          </tr>
+          </thead>
+          <tbody id="tbl_bdy_style">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--</div>-->
+
+
+<div class="modal fade" id="style_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="style_modal_label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Style</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" data-save-url="{% url 'style' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div id="style_modal_body">
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_id">ID</span>
+              <input type="text" class="form-control" placeholder="ID" aria-label="ID"
+                     aria-describedby="lbl_product_id" readonly name="id" id="id">
+            </div>
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_title">Title</span>
+              <input type="text" class="form-control" placeholder="Title" aria-label="Title"
+                     aria-describedby="lbl_product_id" required name="title" id="title">
+            </div>
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_description">Description</span>
+              <input type="text" class="form-control" placeholder="Description" aria-label="Description"
+                     aria-describedby="lbl_product_id" required name="description" id="description">
+            </div>
+            <div class="input-group mb-2">
+              <span class="input-group-text" id="lbl_fk_category">Category</span>
+<!--              <input type="text" class="form-control" placeholder="Description" aria-label="Description"-->
+<!--                     aria-describedby="lbl_product_id" required name="description" id="fk_category">-->
+              <select class="form-control form-select selectpicker custom-dropdown" data-live-search="true" size="5"
+                      title="Choose Category" aria-label="Category" aria-describedby="lbl_fk_category" name="fk_category"
+                      id="fk_category">
+                {% for cat in category %}
+                <option>{{ cat.fields.title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="alert alert-success d-flex align-items-center" role="alert" id="success_alert_style">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+              <use xlink:href="#check-circle-fill"/>
+            </svg>
+            <div>Record saved successfully.</div>
+          </div>
+          <div class="alert alert-danger d-flex align-items-center" role="alert" id="failed_alert_style">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+              <use xlink:href="#exclamation-triangle-fill"/>
+            </svg>
+            <div>Record not saved.</div>
+          </div>
+          <button class="btn btn-primary" id="btn_save_style">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  // ---- Populate style rows in table when function is called.
+  function styleLoadData() {
+    $.ajax({
+      url: "{% url 'style' %}",
+      type: 'GET',
+      dataType: 'json', // added data type
+      success: function(data) {
+        console.log(data);
+        data = data.data
+        var rows = "";
+        var count = 1
+        for (var i = 0; i < data.length; i++) {
+          rows+= '<tr>' +
+            '<td scope="row" class="column1">' + count + '</td>' +
+            '<td class="column2">' + data[i].pk + '</td>' +
+            '<td class="column3">' + data[i].fields.title + '</td>' +
+            '<td class="column4">' + data[i].fields.description + '</td>' +
+            '<td class="column5" value=' + data[i].fields.category.pk + '>' + data[i].fields.category.title + '</td>' +
+            '<td class="column6"><button class="btn btn-primary btn-sm" onclick="styleEdit(this)" data-bs-toggle="modal" data-bs-target="#style_modal"><i class="fa fa-edit"></i> Edit</button></td>' +
+            '</tr>';
+          count += 1;
+        }
+        $("#tbl_bdy_style").empty().append(rows);
+      }
+    });
+    styleGetID();
+  }
+
+
+  function styleGetID() {
+    var next_id = -1;
+    $.ajax({
+      url: "{% url 'style-id' %}",
+      type: 'GET',
+      async: false,
+      dataType: 'json', // added data type
+      success: function(data) {
+        next_id = data["next_id"];
+        category_list = data["category"]
+        var options = "";
+        for (var i = 0; i < category_list.length; i++) {
+          options += '<option value=' + category_list[i].pk + '>' + category_list[i].fields.title + '</option>'
+        }
+        $("#fk_category").empty().append(options);
+        $("#fk_category").selectpicker("refresh");
+        $("#style_modal_body #id").val(next_id);
+      }
+    });
+<!--    return next_id;-->
+  }
+
+  //---- Modal Init
+  function styleModalInit(form) {
+    $('#success_alert_style').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#failed_alert_style').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+    $('#btn_save_style').show();
+    $("form :input").attr("disabled", false);
+    $("form :button").attr("disabled", false);
+    $('#style_modal form')[0].reset()
+    styleGetID();
+    $('#category').prop('disabled', false);
+  }
+
+  //---- Reload/render 'layout' page whenever a record is saved and modal dismissed.
+  var is_saved_style = false;
+  $("#style_modal").on("hidden.bs.modal", function (modal) {
+    if(is_saved_style){
+      styleLoadData();
+      is_saved_style = false;
+    }
+    styleModalInit(modal);
+  });
+
+  //---- Add style in DB via modal.
+  $('#btn_save_style').click(function(event){
+    var form = $(this).closest("form");
+    var isvalidate = form[0].checkValidity();
+    if (isvalidate) {
+      event.preventDefault();
+      $.ajax({
+        url : "{% url 'style' %}",
+        type : "POST", // http method
+        data : form.serialize(),
+
+        // handle a successful response
+        success : function(response){
+          if(response["success"]){
+            $('#btn_save_style').hide();
+            $("form :input").attr("disabled", true);
+            $("form :button").attr("disabled", false);
+            $('#category').prop('disabled', 'disabled');
+            $('#failed_alert_style').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#success_alert_style').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_style = true;
+          }
+          else{
+            $('#success_alert_style').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+            $('#failed_alert_style').show().css({"visibility": "visible", "content-visibility": "visible"});
+            is_saved_style = false;
+          }
+        },
+
+        // handle a non-successful response
+        error : function() {
+          $('#success_alert_style').hide().css({"visibility": "hidden", "content-visibility": "hidden"});
+          $('#failed_alert_style').show().css({"visibility": "visible", "content-visibility": "visible"});
+          is_saved_style = false;
+        }
+      });
+    }
+  });
+
+  function styleEdit(event) {
+    var child = event.closest("tr").children;
+    $("#style_modal_body #id").val(child[1].innerText);
+    $("#style_modal_body #title").val(child[2].innerText);
+    $("#style_modal_body #description").val(child[3].innerText);
+    $("#style_modal_body #fk_category").val(child[4].getAttribute("value"));
+    $("#fk_category").selectpicker("refresh");
+  };
+
+  $(document).ready(styleLoadData());
+
+
+</script>
